@@ -32,6 +32,11 @@ public class LEDlights extends SubsystemBase {
     /* public commands and methods are listed before the private methods they call purely for visibility and ease fo reading, this is not a strict rule
      * sometimes a class can be separated by function instead of visibility.
      */
+    // it isn't ideal, but somtimes methods need to be public so that more complicated commands can be made in different packages.
+    /** this method forces the colour change without regard for subsystem requirements. It should only be used inside another command that requires this subsystem */
+    public void forceColour(Colour colour) {
+        setColor(colour);
+    }
 
     public Command rainbowCommand() {
         //written as a method reference instead of a lambda you can only do this with methods thaet take no parameters and return void
