@@ -1,8 +1,11 @@
 
 package frc.robot.subsystems.lights;
 
-import com.ctre.phoenix.led.*;
+import com.ctre.phoenix.led.CANdle;
 import com.ctre.phoenix.led.CANdle.VBatOutputMode;
+import com.ctre.phoenix.led.CANdleConfiguration;
+import com.ctre.phoenix.led.RainbowAnimation;
+import com.ctre.phoenix.led.StrobeAnimation;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -14,6 +17,7 @@ public class LEDlights extends SubsystemBase {
 
     //Constants
     private static final int LEDS_PER_ANIMATION = 200;
+    private static final int LED_STROBE_OFFSET = 0;
 
     private static final double FULL_BRIGHTNESS = 1; 
     private static final double DEFAULT_BRIGHTNESS = 0.2; //20% brightness (0.0 to 1.0) //putting this here makes it easy to find and tweak later if we don't like this value
@@ -99,6 +103,7 @@ public class LEDlights extends SubsystemBase {
         GREEN(new Colour(0, 255, 0)),
         BLUE(new Colour(0, 0, 255)),
         YELLOW(new Colour(255, 255, 0)),
+        ORANGE(new Colour(255, 100, 0)),
         PURPLE(new Colour(128, 0, 128)),
         CYAN(new Colour(0, 255, 255)),
         WHITE(new Colour(255, 255, 255)),
@@ -130,7 +135,7 @@ public class LEDlights extends SubsystemBase {
     //currently unused but could be useful later mainly included to show the Object Oriented Programming property of polymorphism
     private void setStrobe(Colour colour, double speed) {
         speed = Math.max(0.01, Math.min(1, speed)); //clamp speed between 0.01 and 1
-        candle.animate(new StrobeAnimation(colour.r, colour.g, colour.b, 0, speed, LEDS_PER_ANIMATION, 0));
+        candle.animate(new StrobeAnimation(colour.r, colour.g, colour.b, 0, speed, LEDS_PER_ANIMATION, LED_STROBE_OFFSET));
     }
 
     private void setColor(Colour colour) {
