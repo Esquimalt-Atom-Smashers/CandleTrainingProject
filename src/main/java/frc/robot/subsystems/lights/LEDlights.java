@@ -13,6 +13,8 @@ public class LEDlights extends SubsystemBase {
     private final CANdle candle = new CANdle(26); //TODO Set CAN ID // the "TODO" keyword in all caps makes this show up in the "problems" tab of the terminal
 
     //Constants
+    private static final int LEDS_PER_ANIMATION = 200;
+
     private static final double FULL_BRIGHTNESS = 1; 
     private static final double DEFAULT_BRIGHTNESS = 0.2; //20% brightness (0.0 to 1.0) //putting this here makes it easy to find and tweak later if we don't like this value
     private static final double OFF_BRIGHTNESS = 0;
@@ -110,7 +112,7 @@ public class LEDlights extends SubsystemBase {
 
     /** This method runs a rainbow animation from the phoenix led library with some default values */
     private void rainbowAnimation() {
-        RainbowAnimation rainbowAnim = new RainbowAnimation(FULL_BRIGHTNESS, 0.5, 64);//currently set to some default values,
+        RainbowAnimation rainbowAnim = new RainbowAnimation(FULL_BRIGHTNESS, 0.5, LEDS_PER_ANIMATION);//currently set to some default values,
         // if you wanted to make these easily configurable, you could add them to a Constants section at the top of the class
         candle.animate(rainbowAnim);
     }
@@ -122,7 +124,7 @@ public class LEDlights extends SubsystemBase {
     //currently unused but could be useful later mainly included to show the Object Oriented Programming property of polymorphism
     private void setStrobe(Colour colour, double speed) {
         speed = Math.max(0.01, Math.min(1, speed)); //clamp speed between 0.01 and 1
-        candle.animate(new StrobeAnimation(colour.r, colour.g, colour.b, 0,speed,15,20));
+        candle.animate(new StrobeAnimation(colour.r, colour.g, colour.b, 0, speed, LEDS_PER_ANIMATION, 0));
     }
 
     private void setColor(Colour colour) {
