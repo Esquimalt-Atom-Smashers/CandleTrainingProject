@@ -49,8 +49,13 @@ public class LEDlights extends SubsystemBase {
         //using "this" keyword means that this subsystem is required by the command, and any other command running this subsyetm will stop
     }
 
-    public Command clearCANdleCommand() {
-        return setColorCommand(new Colour(0, 0, 0));
+    public Command clearLEDAnimation() {
+        return Commands.runOnce(() -> clearAnimation(), this);
+
+    }
+
+    public Command turnLEDsOff() {
+        return setColorCommand(CommonColours.OFF.colour);
         //using "this" keyword is not required here since the command returned by setColorCommand already requires this subsystem
     }
     
@@ -112,5 +117,9 @@ public class LEDlights extends SubsystemBase {
 
     private void setColor(Colour colour) {
         candle.setLEDs(colour.r, colour.g, colour.b);
+    }
+
+    private void clearAnimation() { 
+        candle.clearAnimation(0);
     }
 }
