@@ -9,11 +9,15 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDlights extends SubsystemBase {
-    //This is already set to 26 for training ont he Tamatoa robot, but remember to change the CAN ID to match your robot configuration.
+    //This is already set to 26 for training on the Tamatoa robot, but remember to change the CAN ID to match your robot configuration.
     private final CANdle candle = new CANdle(26); //TODO Set CAN ID // the "TODO" keyword in all caps makes this show up in the "problems" tab of the terminal
 
     //Constants
+    private static final int LEDS_PER_ANIMATION = 200;
+
+    private static final double FULL_BRIGHTNESS = 1; 
     private static final double DEFAULT_BRIGHTNESS = 0.2; //20% brightness (0.0 to 1.0) //putting this here makes it easy to find and tweak later if we don't like this value
+    private static final double OFF_BRIGHTNESS = 0;
 
     private CANdleConfiguration config;
 
@@ -54,8 +58,21 @@ public class LEDlights extends SubsystemBase {
         //using "this" keyword means that this subsystem is required by the command, and any other command running this subsyetm will stop
     }
 
-    public Command clearCANdleCommand() {
-        return setColorCommand(new Colour(0, 0, 0));
+    /** 
+     * @param speed how fast the strobe turns on and off - double between 0 and 1 inclusive
+     */
+    public Command setStrobeCommand(Colour colour, double speed) {
+        return Commands.runOnce(() -> setStrobe(colour, speed), this);
+        //using "this" keyword means that this subsystem is required by the command, and any other command running this subsyetm will stop
+    }
+
+    public Command clearLEDAnimation() {
+        return Commands.runOnce(() -> clearAnimation(), this);
+
+    }
+
+    public Command turnLEDsOff() {
+        return setColorCommand(CommonColours.OFF.colour);
         //using "this" keyword is not required here since the command returned by setColorCommand already requires this subsystem
     }
     
@@ -100,7 +117,7 @@ public class LEDlights extends SubsystemBase {
 
     /** This method runs a rainbow animation from the phoenix led library with some default values */
     private void rainbowAnimation() {
-        RainbowAnimation rainbowAnim = new RainbowAnimation(1, 0.5, 64);//currently set to some default values,
+        RainbowAnimation rainbowAnim = new RainbowAnimation(FULL_BRIGHTNESS, 0.5, LEDS_PER_ANIMATION);//currently set to some default values,
         // if you wanted to make these easily configurable, you could add them to a Constants section at the top of the class
         candle.animate(rainbowAnim);
     }
@@ -115,11 +132,15 @@ public class LEDlights extends SubsystemBase {
     //currently unused but could be useful later mainly included to show the Object Oriented Programming property of polymorphism
     private void setStrobe(Colour colour, double speed) {
         speed = Math.max(0.01, Math.min(1, speed)); //clamp speed between 0.01 and 1
-        candle.animate(new StrobeAnimation(colour.r, colour.g, colour.b, 0,speed,15,20));
+        candle.animate(new StrobeAnimation(colour.r, colour.g, colour.b, 0, speed, LEDS_PER_ANIMATION, 0));
     }
 
     private void setColor(Colour colour) {
         clearAnimation();
         candle.setLEDs(colour.r, colour.g, colour.b);
+    }
+
+    private void clearAnimation() { 
+        candle.clearAnimation(0);
     }
 }
