@@ -9,11 +9,13 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDlights extends SubsystemBase {
-    //This is already set to 26 for training ont he Tamatoa robot, but remember to change the CAN ID to match your robot configuration.
+    //This is already set to 26 for training on the Tamatoa robot, but remember to change the CAN ID to match your robot configuration.
     private final CANdle candle = new CANdle(26); //TODO Set CAN ID // the "TODO" keyword in all caps makes this show up in the "problems" tab of the terminal
 
     //Constants
+    private static final double FULL_BRIGHTNESS = 1; 
     private static final double DEFAULT_BRIGHTNESS = 0.2; //20% brightness (0.0 to 1.0) //putting this here makes it easy to find and tweak later if we don't like this value
+    private static final double OFF_BRIGHTNESS = 0;
 
     private CANdleConfiguration config;
 
@@ -108,7 +110,7 @@ public class LEDlights extends SubsystemBase {
 
     /** This method runs a rainbow animation from the phoenix led library with some default values */
     private void rainbowAnimation() {
-        RainbowAnimation rainbowAnim = new RainbowAnimation(1, 0.5, 64);//currently set to some default values,
+        RainbowAnimation rainbowAnim = new RainbowAnimation(FULL_BRIGHTNESS, 0.5, 64);//currently set to some default values,
         // if you wanted to make these easily configurable, you could add them to a Constants section at the top of the class
         candle.animate(rainbowAnim);
     }
