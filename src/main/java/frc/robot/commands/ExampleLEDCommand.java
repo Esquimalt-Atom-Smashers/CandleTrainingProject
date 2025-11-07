@@ -13,10 +13,11 @@ import frc.robot.subsystems.lights.LEDlights.CommonColours;
 public class ExampleLEDCommand extends Command {
   private final LEDlights ledLightsSubsystem;
   private static Timer timer = new Timer();
-  private static int lastElapsedSeconds =-1; //to keep track of last second we changed colour
+  public static int lastElapsedSeconds = -1; //to keep track of last second we changed colour
 
+  public static final double COMMAND_RUNTIME_SECONDS = 10;
   /**
-   * Creates a new ExampleCommand that runs for 10 seconds
+   * Creates a new ExampleCommand that runs for {@value #COMMAND_RUNTIME_SECONDS} seconds
    *
    * @param subsystem The subsystem used by this command.
    */
@@ -90,6 +91,6 @@ public class ExampleLEDCommand extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.hasElapsed(10.0);
+    return timer.hasElapsed(COMMAND_RUNTIME_SECONDS);
   }
 }
