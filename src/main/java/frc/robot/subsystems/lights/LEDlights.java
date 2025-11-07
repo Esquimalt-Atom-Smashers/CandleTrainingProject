@@ -108,6 +108,9 @@ public class LEDlights extends SubsystemBase {
     private void setStrobe(Colour colour) {
         candle.animate(new StrobeAnimation(colour.r, colour.g, colour.b));
     }
+    private void clearAnimation() {
+        candle.animate(null);
+    }
     /** this strobes only some of the LEDs (roughly numbered 20 to 35), at a speed set by the caller of theis method */
     //currently unused but could be useful later mainly included to show the Object Oriented Programming property of polymorphism
     private void setStrobe(Colour colour, double speed) {
@@ -116,6 +119,7 @@ public class LEDlights extends SubsystemBase {
     }
 
     private void setColor(Colour colour) {
+        clearAnimation();
         candle.setLEDs(colour.r, colour.g, colour.b);
     }
 }
