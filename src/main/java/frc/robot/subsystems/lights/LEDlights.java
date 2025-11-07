@@ -49,6 +49,14 @@ public class LEDlights extends SubsystemBase {
         //using "this" keyword means that this subsystem is required by the command, and any other command running this subsyetm will stop
     }
 
+    /** 
+     * @param speed how fast the strobe turns on and off - double between 0 and 1 inclusive
+     */
+    public Command setStrobeCommand(Colour colour, double speed) {
+        return Commands.runOnce(() -> setStrobe(colour, speed), this);
+        //using "this" keyword means that this subsystem is required by the command, and any other command running this subsyetm will stop
+    }
+
     public Command clearLEDAnimation() {
         return Commands.runOnce(() -> clearAnimation(), this);
 
