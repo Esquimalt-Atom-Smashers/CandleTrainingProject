@@ -53,7 +53,9 @@ public class LEDlights extends SubsystemBase {
         return setColorCommand(new Colour(0, 0, 0));
         //using "this" keyword is not required here since the command returned by setColorCommand already requires this subsystem
     }
-    
+    public Command setSpecificLED(Colour colour) {
+        return Commands.runOnce(() -> setSpecificLED(colour,100,10), this);
+    }
     //this is a helper class to make it easier to pass colours as an object. it limits the range of values to those of an RBG value.
     public static class Colour {
 
@@ -80,7 +82,8 @@ public class LEDlights extends SubsystemBase {
         PURPLE(new Colour(128, 0, 128)),
         CYAN(new Colour(0, 255, 255)),
         WHITE(new Colour(255, 255, 255)),
-        OFF(new Colour(0, 0, 0));
+        OFF(new Colour(0, 0, 0)),
+        CHARTREUSE(new Colour(223,255,0));
 
         public final Colour colour;
 
@@ -112,5 +115,12 @@ public class LEDlights extends SubsystemBase {
 
     private void setColor(Colour colour) {
         candle.setLEDs(colour.r, colour.g, colour.b);
+    }
+    private void clearAnimation() {
+        candle.clearAnimation(0);
+    }
+    public void setSpecificLED(Colour colour,int led, int ledAmount) {
+        clearAnimation();
+        candle.setLEDs(colour.r, colour.g, colour.b, 0, led, 1);
     }
 }
