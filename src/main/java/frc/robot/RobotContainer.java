@@ -47,7 +47,7 @@ public class RobotContainer {
     driverController.a().onTrue(LEDlightsSubsystem.setColorCommand(CommonColours.RED.colour));
     driverController.b().onTrue(LEDlightsSubsystem.setColorCommand(CommonColours.GREEN.colour));
     driverController.x().onTrue(LEDlightsSubsystem.setColorCommand(CommonColours.BLUE.colour));
-    driverController.y().onTrue(LEDlightsSubsystem.setSpecificLED(CommonColours.CHARTREUSE.colour));
+    driverController.y().onTrue(LEDlightsSubsystem.setLEDS(CommonColours.CHARTREUSE.colour));
     //driverController.back().whileTrue(getAutonomousCommand());//this is added in only to run it like an auto in teleop, so you can see what happens with inturrupts 
   }
 

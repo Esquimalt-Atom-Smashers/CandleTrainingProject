@@ -4,14 +4,19 @@ package frc.robot.subsystems.lights;
 import com.ctre.phoenix.led.*;
 import com.ctre.phoenix.led.CANdle.VBatOutputMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LEDlights extends SubsystemBase {
     //This is already set to 26 for training ont he Tamatoa robot, but remember to change the CAN ID to match your robot configuration.
     private final CANdle candle = new CANdle(26); //TODO Set CAN ID // the "TODO" keyword in all caps makes this show up in the "problems" tab of the terminal
-
+    private final Timer timer = new Timer();
+    private static int lastElapsedSeconds = -1; //keeps track of the last time we changed the led.
+    private final int LEDS_PER_SECOND = 100;
+    private final int LED_AMOUNT = 212;
     //Constants
     private static final double DEFAULT_BRIGHTNESS = 0.2; //20% brightness (0.0 to 1.0) //putting this here makes it easy to find and tweak later if we don't like this value
 
@@ -53,8 +58,10 @@ public class LEDlights extends SubsystemBase {
         return setColorCommand(new Colour(0, 0, 0));
         //using "this" keyword is not required here since the command returned by setColorCommand already requires this subsystem
     }
-    public Command setSpecificLED(Colour colour) {
-        return Commands.runOnce(() -> setSpecificLED(colour,100,10), this);
+    int ElapsedSeconds = (int) (timer.get() * LEDS_PER_SECOND),
+     led = ElapsedSeconds;
+    public Command setLEDS(Colour colour) {
+        return Commands.runOnce(() -> setLEDS(colour,led,10),this );
     }
     //this is a helper class to make it easier to pass colours as an object. it limits the range of values to those of an RBG value.
     public static class Colour {
@@ -119,8 +126,11 @@ public class LEDlights extends SubsystemBase {
     private void clearAnimation() {
         candle.clearAnimation(0);
     }
-    public void setSpecificLED(Colour colour,int led, int ledAmount) {
+    
+    public void setLEDS(Colour colour,int led, int ledAmount) {
+  
         clearAnimation();
-        candle.setLEDs(colour.r, colour.g, colour.b, 0, led, 1);
+        candle.setLEDs(colour.r, colour.g, colour.b, 0, led, ledAmount);
+      
     }
 }
