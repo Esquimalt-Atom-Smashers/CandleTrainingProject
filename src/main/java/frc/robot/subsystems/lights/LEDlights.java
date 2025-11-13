@@ -1,6 +1,7 @@
 
 package frc.robot.subsystems.lights;
 
+import com.ctre.phoenix.ErrorCode;
 import com.ctre.phoenix.led.*;
 import com.ctre.phoenix.led.CANdle.VBatOutputMode;
 
@@ -71,9 +72,20 @@ public class LEDlights extends SubsystemBase {
 
     }
 
+
     public Command clearCANdleCommand() {
         return setColorCommand(CommonColours.OFF.colour);
         //using "this" keyword is not required here since the command returned by setColorCommand already requires this subsystem
+    }
+
+    public Command setSingleLEDCommand() {
+        return Commands.runOnce(() -> setSingleLED(), this);
+
+    }
+
+    public Command setMultipleLEDCommand() {
+        return Commands.runOnce(() -> setMultipleLED(), this);
+
     }
     
     //this is a helper class to make it easier to pass colours as an object. it limits the range of values to those of an RBG value.
@@ -140,5 +152,15 @@ public class LEDlights extends SubsystemBase {
 
     private void clearAnimation() { 
         candle.clearAnimation(0);
+    }
+    // public ErrorCode setLEDs(int r, int g, int b, int w, int startIdx, int count) {
+    //     return ErrorCode.valueOf(CANdleJNI.BlockSet(_handle, r, g, b, w, startIdx, count));
+    // }
+    private void setSingleLED(){
+        candle.setLEDs(255, 255, 255, 0, 20, 1);
+
+    }
+    private void setMultipleLED(){
+        candle.setLEDs(255, 255, 255, 0, 0, 8);
     }
 }

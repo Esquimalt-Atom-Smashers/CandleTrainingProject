@@ -41,7 +41,7 @@ public class RobotContainer {
    */
   private void configureBindings() {
     driverController.start().onTrue(LEDlightsSubsystem.rainbowCommand());
-    driverController.a().onTrue(LEDlightsSubsystem.setColorCommand(CommonColours.RED.colour));
+    driverController.a().onTrue(LEDlightsSubsystem.setMultipleLEDCommand());
     driverController.b().onTrue(LEDlightsSubsystem.setColorCommand(CommonColours.GREEN.colour));
     driverController.x().onTrue(LEDlightsSubsystem.setColorCommand(CommonColours.BLUE.colour));
     driverController.y().onTrue(LEDlightsSubsystem.setColorCommand(CommonColours.WHITE.colour));
