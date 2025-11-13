@@ -133,9 +133,14 @@ public class LEDlights extends SubsystemBase {
         candle.animate(new StrobeAnimation(colour.r, colour.g, colour.b, 0, speed, LEDS_PER_ANIMATION, 0));
     }
 
-    private void setColor(Colour colour) {
+    protected void setColor(Colour colour) {
         clearAnimation();
         candle.setLEDs(colour.r, colour.g, colour.b);
+    }
+
+    protected void setColour(Colour colour, int start, int numberOfLEDs) {
+        clearAnimation();
+        candle.setLEDs(colour.r, colour.g, colour.b, 0,start,numberOfLEDs);
     }
 
     private void clearAnimation() { 

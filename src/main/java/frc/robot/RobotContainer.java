@@ -6,6 +6,7 @@ package frc.robot;
 
 import frc.robot.commands.Autos;
 import frc.robot.subsystems.lights.LEDlights;
+import frc.robot.subsystems.lights.scrollingLEDCommand;
 import frc.robot.subsystems.lights.LEDlights.CommonColours;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -45,7 +46,7 @@ public class RobotContainer {
     driverController.b().onTrue(LEDlightsSubsystem.setColorCommand(CommonColours.GREEN.colour));
     driverController.x().onTrue(LEDlightsSubsystem.setColorCommand(CommonColours.BLUE.colour));
     driverController.y().onTrue(LEDlightsSubsystem.setColorCommand(CommonColours.WHITE.colour));
-    driverController.back().whileTrue(getAutonomousCommand());//this is added in only to run it like an auto in teleop, so you can see what happens with inturrupts 
+    driverController.back().whileTrue(new scrollingLEDCommand(LEDlightsSubsystem,200));//this is added in only to run it like an auto in teleop, so you can see what happens with inturrupts 
   }
 
   /**
