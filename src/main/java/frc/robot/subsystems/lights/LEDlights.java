@@ -60,9 +60,9 @@ public class LEDlights extends SubsystemBase {
     }
     int ElapsedSeconds = (int) (timer.get() * LEDS_PER_SECOND),
      led = ElapsedSeconds;
-    public Command setLEDS(Colour colour) {
+  /*   public Command setLEDS(Colour colour) {
         return Commands.runOnce(() -> setLEDS(colour,led,10),this );
-    }
+    } */
     //this is a helper class to make it easier to pass colours as an object. it limits the range of values to those of an RBG value.
     public static class Colour {
 
