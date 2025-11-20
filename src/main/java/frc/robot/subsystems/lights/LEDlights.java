@@ -156,8 +156,16 @@ public class LEDlights extends SubsystemBase {
     // public ErrorCode setLEDs(int r, int g, int b, int w, int startIdx, int count) {
     //     return ErrorCode.valueOf(CANdleJNI.BlockSet(_handle, r, g, b, w, startIdx, count));
     // }
-    private void setSingleLED(){
+    protected void setSingleLED(){
         candle.setLEDs(255, 255, 255, 0, 20, 1);
+
+    }
+    protected void setSingleLED(int startLED, int numberOfLEDs){
+        candle.setLEDs(255, 255, 255, 0, startLED, numberOfLEDs);
+
+    }
+    protected void turnOffSingleLED(int startLED, int numberOfLEDs){
+        candle.setLEDs(0, 0, 0, 0, startLED, numberOfLEDs);
 
     }
     private void setMultipleLED(){
