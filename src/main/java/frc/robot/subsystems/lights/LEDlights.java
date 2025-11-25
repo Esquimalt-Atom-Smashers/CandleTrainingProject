@@ -31,7 +31,7 @@ public class LEDlights extends SubsystemBase {
         config.vBatOutputMode = VBatOutputMode.Modulated;
         candle.configAllSettings(config,100);
 
-        setColor(CommonColours.PURPLE.colour); //Default colour setting pulled from the Enum at the bottom of this class
+        setColor(CommonColours.GREEN.colour); //Default colour setting pulled from the Enum at the bottom of this class
     }
 
     /* public commands and methods are listed before the private methods they call purely for visibility and ease fo reading, this is not a strict rule

@@ -15,9 +15,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class SnakeLEDCommand extends Command {
   private final LEDlights ledLightsSubsystem;
   private final int LENGTH_OF_CHAIN = 212;
-  private final int NUMBER_OF_LEDS = 20;
-  private final double SECONDS_PER_MOVE = 0.1;
-  private final double EXECUTE_PERIOD = 0.02;
+  private final int NUMBER_OF_LEDS = 30;
+  private final double SECONDS_PER_MOVE = 0.0005;
+  private final double EXECUTE_PERIOD = 0.002;
   private int counter;
   
 
@@ -47,13 +47,16 @@ public class SnakeLEDCommand extends Command {
   public void execute() {
     counter ++;
     int index = (int)(counter/(SECONDS_PER_MOVE/EXECUTE_PERIOD));
+    if ((index - NUMBER_OF_LEDS) >= 0){
+        //turn off old leds
+        ledLightsSubsystem.turnOffSingleLED((index - NUMBER_OF_LEDS),1);
+    }
     //set index led to white
     ledLightsSubsystem.setSingleLED(index,1);
-    //turn off old leds
-    ledLightsSubsystem.turnOffSingleLED((index-NUMBER_OF_LEDS),1);
-    if (index>LENGTH_OF_CHAIN){
+    if (index > (LENGTH_OF_CHAIN + NUMBER_OF_LEDS)){
       counter =1;
     }
+   
 
   }
 
